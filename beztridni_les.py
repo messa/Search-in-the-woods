@@ -46,7 +46,7 @@ def change_bg_a(t):
     background.draw()
     background_woods.draw()
     kralik.draw()
-    pyglet.clock.schedule_once(change_bg_b, 2, kralik)
+    pyglet.clock.schedule_once(change_bg_b, 2)
 
 def change_rabbit_a(t, hledany):
     #if not found:
@@ -65,6 +65,11 @@ def change_rabbit_b(t, hledany):
     hledany.draw()
     pyglet.clock.schedule_once(change_rabbit_a, 3, hledany)
 
+def nalezeni_hledaneho(x,y,b,mod):
+    background.draw()
+    background_woods.draw()
+    kralik.image = rabbit_01_a_win
+    kralik.draw()
 
 # start background changing
 pyglet.clock.schedule_once(change_bg_b, 7)
@@ -72,6 +77,7 @@ pyglet.clock.schedule_once(change_rabbit_b, 3, kralik)
 
 window.push_handlers(
     on_show=vykresli_na_zacatku,
+    on_mouse_press= nalezeni_hledaneho,
 )
 
 pyglet.app.run()
