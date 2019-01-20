@@ -13,17 +13,19 @@ def draw_background():
     background.draw()
     rabbit_n01 = Rabbits()
     Rabbits.draw(rabbit_n01)
+    pyglet.clock.schedule_interval(rabbit_n01.change_b, 2)
+
 
 def change_bg_b(t):
     background.image = background_picture_b
     background.draw()
-    pyglet.clock.schedule_once(change_bg_a, 3)
+    pyglet.clock.schedule_once(change_bg_a, 2)
 
 
 def change_bg_a(t):
     background.image = background_picture_a
     background.draw()
-    pyglet.clock.schedule_once(change_bg_b, 4)
+    pyglet.clock.schedule_once(change_bg_b, 2)
 
 
 class Hidden:
@@ -46,16 +48,15 @@ class Rabbits(Hidden):
 
     def find(self):
         self.sprite = pyglet.sprite.Sprite(rabbit_01_a_win)
-        finded = True
+        found = True
 
-    def change_a(self):
-        if finded == True:
-            Break
+    def change_a(self,t):
+        #if not found:
         self.sprite = pyglet.sprite.Sprite(rabbit_01_a)
 
-    def change_b(self):
-        if finded == True:
-            Break
+    def change_b(self,t):
+        #if not found:
+        #print(self)
         self.sprite = pyglet.sprite.Sprite(rabbit_01_b)
 
 
@@ -65,14 +66,14 @@ class Rabbits(Hidden):
 window = pyglet.window.Window()
 
 # loads images for background
-background_picture_a = pyglet.image.load("bg_01_a.jpg")
-background_picture_b = pyglet.image.load("bg_01_b.jpg")
+background_picture_a = pyglet.image.load("bg_01_a.png")
+background_picture_b = pyglet.image.load("bg_01_b.png")
 background = pyglet.sprite.Sprite(background_picture_a)
 
 # loads images for Hidden
-rabbit_01_a = pyglet.image.load("rabbit_01_a.jpg")
-rabbit_01_b = pyglet.image.load("rabbit_01_b.jpg")
-rabbit_01_a_win = pyglet.image.load("rabbit_01_a_win.jpg")
+rabbit_01_a = pyglet.image.load("rabbit_01_a.png")
+rabbit_01_b = pyglet.image.load("rabbit_01_b.png")
+rabbit_01_a_win = pyglet.image.load("rabbit_01_a_win.png")
 
 # start background changing
 pyglet.clock.schedule_once(change_bg_b, 2)
@@ -80,5 +81,7 @@ pyglet.clock.schedule_once(change_bg_b, 2)
 window.push_handlers(
     on_show=draw_background,
   )
+
+
 
 pyglet.app.run()
