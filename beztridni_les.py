@@ -66,10 +66,11 @@ def change_rabbit_b(t, hledany):
     pyglet.clock.schedule_once(change_rabbit_a, 3, hledany)
 
 def nalezeni_hledaneho(x,y,b,mod):
-    background.draw()
-    background_woods.draw()
-    kralik.image = rabbit_01_a_win
-    kralik.draw()
+    if x in range(150, 150+81) and y in range(60, 60+84):
+        background.draw()
+        background_woods.draw()
+        kralik.image = rabbit_01_a_win
+        kralik.draw()
 
 # start background changing
 pyglet.clock.schedule_once(change_bg_b, 7)
