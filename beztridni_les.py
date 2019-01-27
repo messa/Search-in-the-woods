@@ -66,7 +66,9 @@ def change_rabbit_b(t, hledany):
     pyglet.clock.schedule_once(change_rabbit_a, 3, hledany)
 
 def nalezeni_hledaneho(x,y,b,mod):
-    if x in range(150, 150+81) and y in range(60, 60+84):
+    if x in range(kralik.x, kralik.x+RABBIT_WIDTH) and y in range(kralik.y, kralik.y+RABBIT_HEIGHT):
+        print("{} je v ({},{})." .format(x, kralik.x, kralik.x+RABBIT_WIDTH))
+        print("{} je v ({},{})." .format(y,kralik.y, kralik.y+RABBIT_HEIGHT))
         background.draw()
         background_woods.draw()
         kralik.image = rabbit_01_a_win
