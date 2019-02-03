@@ -1,4 +1,5 @@
 import pyglet
+import time
 
 WINDOW_WIDTH, WINDOW_HEIGHT = 640, 400
 RABBIT_WIDTH, RABBIT_HEIGHT = 81, 84
@@ -32,13 +33,13 @@ car_01_a_win = pyglet.image.load("car_01_a_win.png")
 kralik = pyglet.sprite.Sprite(rabbit_01_a)
 kralik.x = 150
 kralik.y = 60
-hledany_list.append(kralik)
+hledany_list.append((kralik, rabbit_01_a, rabbit_01_b, rabbit_01_a_win))
 
 # for Hidden - car -vlastnosti pro auto ve službě
 auto = pyglet.sprite.Sprite(car_01_a)
 auto.x = 300
 auto.y = 100
-hledany_list.append(auto)
+hledany_list.append((auto, car_01_a, car_01_b, car_01_a_win))
 
 
 def vykresli_na_zacatku():
@@ -68,35 +69,32 @@ def change_bg_a(t):
 
 def change_hidden_all(t, k_meneni_list):
 
-    def change_hidden_a(t, hledany):
-        #if not found:
-        background.draw()
-        background_woods.draw()
+    pocitadlo = 0
 
-        if hledany == kralik:
-            hledany.image = rabbit_01_a
-            #kralik.x = 150
-            #kralik.y = 60
+    while pocitadlo <= 3:
+        pocitadlo += 1
+        print(pocitadlo) #kontrola
+        print(k_meneni_list) #kontrola
+        for typ_zmeny in [2,1]: #má zajišťovat střídání obrázků "a" [1] a "b" [2]
+            for poradi in range(2): #zajišťuje střídání povelů pro králíka  a pro auto
+                print(k_meneni_list) #kontrola
+                print("hledany", k_meneni_list[poradi][0]) #kontrola
+                hledany = k_meneni_list[poradi][0] #vybírá kralik [0][0] vs. auto [1][0]
 
-        elif hledany == auto:
-            hledany.image = car_01_a
-        hledany.draw()
-        pyglet.clock.schedule_once(change_hidden_b, 5, hledany)
+                print("zmena",  k_meneni_list[poradi][typ_zmeny])#kontrola
 
-    def change_hidden_b(t, hledany):
-        background.draw()
-        background_woods.draw()
-        if hledany == kralik:
-            hledany.image = rabbit_01_b
-        elif hledany == auto:
-            hledany.image = car_01_b
-        hledany.draw()
-        pyglet.clock.schedule_once(change_hidden_a, 5, hledany)
+                hledany.image = k_meneni_list[poradi][typ_zmeny] #má měnit obrázek u kralika/auta
+                #jak_vykreslit_hledany(hledany)
+                print(hledany) # kontrola
+                background.draw()
+                background_woods.draw()
+                hledany.draw()
+                time.sleep(5)
 
-    for poradi in range (2):
-        hledany = k_meneni_list[poradi]
-        print(poradi, k_meneni_list[poradi])
-        change_hidden_b(t, hledany)
+
+
+
+
 
 def nalezeni_hledaneho(x,y,b,mod):
     if x in range(kralik.x, kralik.x+RABBIT_WIDTH) and y in range(kralik.y, kralik.y+RABBIT_HEIGHT):
